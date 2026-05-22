@@ -1,0 +1,246 @@
+<UserControl x:Class="BctWinsetup.Views.SoftwareInstallPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="600">
+    <UserControl.Resources>
+        
+        <Style TargetType="Button" x:Key="ModernButtonStyle">
+            <Setter Property="Background" Value="#0078D4"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0086F0"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005A9E"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#2D2D2D"/>
+                    <Setter Property="Foreground" Value="#666666"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="OutlineButtonStyle" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="#444444" 
+                                BorderThickness="1"
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#252525"/>
+                    <Setter Property="BorderBrush" Value="#666666"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#1A1A1A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        
+        <Style TargetType="ListViewItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="#2D2D2D"/>
+            <Setter Property="Padding" Value="8,10"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <GridViewRowPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#252525"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#1F2836"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#121212" Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="Cài Đặt Phần Mềm Tự Động" 
+                       Foreground="#FFFFFF" 
+                       FontSize="22" 
+                       FontWeight="SemiBold" 
+                       FontFamily="Segoe UI"/>
+            <TextBlock Text="Quét tự động các tệp cài đặt (.exe, .msi) trong thư mục ứng dụng để cài đặt nhanh hàng loạt." 
+                       Foreground="#A0A0A0" 
+                       FontSize="13" 
+                       Margin="0,4,0,0" 
+                       FontFamily="Segoe UI"/>
+        </StackPanel>
+
+        
+        <Grid Grid.Row="1" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock x:Name="TxtAppCount" Text="Đang quét thư mục tìm bộ cài..." 
+                           Foreground="#FFFFFF" FontSize="13" FontWeight="Medium" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="Chọn tất cả" Style="{StaticResource OutlineButtonStyle}" Click="BtnSelectAll_Click" Margin="0,0,8,0" Padding="12,6"/>
+                <Button Content="Bỏ chọn tất cả" Style="{StaticResource OutlineButtonStyle}" Click="BtnDeselectAll_Click" Margin="0,0,8,0" Padding="12,6"/>
+                <Button Content="Quét lại" Style="{StaticResource OutlineButtonStyle}" Click="BtnRescan_Click" Padding="12,6"/>
+            </StackPanel>
+        </Grid>
+
+        
+        <ListView Grid.Row="2" x:Name="LstSoftwares" 
+                  Background="#1E1E1E" 
+                  BorderBrush="#2D2D2D" 
+                  BorderThickness="1" 
+                  SelectionMode="Single"
+                  Margin="0,0,0,12"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListView.View>
+                <GridView>
+                    
+                    <GridViewColumn Width="40">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    
+                    <GridViewColumn Header="Tên tệp cài đặt" Width="290">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FileName}" Foreground="#FFFFFF" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    
+                    <GridViewColumn Header="Loại tệp" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FileType}" Foreground="#666666" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    
+                    <GridViewColumn Header="Trạng thái" Width="135">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Status}" Foreground="{Binding StatusColor}" FontWeight="Medium" VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        
+        <StackPanel Grid.Row="3" Margin="0,0,0,12">
+            <Grid Margin="0,0,0,6">
+                <TextBlock x:Name="TxtStatus" Text="Chọn các phần mềm và bấm Bắt đầu cài đặt." 
+                           Foreground="#A0A0A0" FontSize="13" FontFamily="Segoe UI"/>
+                <TextBlock x:Name="TxtPercentage" Text="" 
+                           Foreground="#00A2ED" FontSize="13" FontWeight="SemiBold" 
+                           HorizontalAlignment="Right" FontFamily="Segoe UI"/>
+            </Grid>
+            
+            <ProgressBar x:Name="ProgBar" Height="4" Background="#1E1E1E" Foreground="#0078D4" 
+                         BorderThickness="0" Minimum="0" Maximum="100" Value="0"/>
+        </StackPanel>
+
+        
+        <Grid Grid.Row="4" Margin="0,0,0,12">
+            <Border Background="#1E1E1E" BorderBrush="#2D2D2D" BorderThickness="1" CornerRadius="4">
+                <TextBox x:Name="TxtLog" 
+                         Background="Transparent" 
+                         Foreground="#A0A0A0" 
+                         BorderThickness="0" 
+                         Padding="12" 
+                         FontFamily="Consolas" 
+                         FontSize="12" 
+                         IsReadOnly="True" 
+                         VerticalScrollBarVisibility="Auto" 
+                         AcceptsReturn="True" 
+                         TextWrapping="Wrap"
+                         Text="--- Nhật ký cài đặt phần mềm ---&#x0a;Chờ lệnh từ người dùng..."/>
+            </Border>
+        </Grid>
+
+        
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" x:Name="BtnStartInstall" 
+                    Content="Bắt đầu cài đặt" 
+                    Style="{StaticResource ModernButtonStyle}" 
+                    Padding="24,12" 
+                    HorizontalAlignment="Left"
+                    Click="BtnStartInstall_Click"/>
+
+            <Button Grid.Column="1" x:Name="BtnOpenFolder" 
+                    Content="Mở thư mục ứng dụng" 
+                    Style="{StaticResource OutlineButtonStyle}" 
+                    Padding="20,12" 
+                    Click="BtnOpenFolder_Click"/>
+        </Grid>
+    </Grid>
+</UserControl>

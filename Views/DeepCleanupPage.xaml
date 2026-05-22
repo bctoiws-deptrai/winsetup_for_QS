@@ -1,0 +1,195 @@
+<UserControl x:Class="BctWinsetup.Views.DeepCleanupPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="600">
+    <UserControl.Resources>
+        
+        <Style TargetType="Button" x:Key="ModernButtonStyle">
+            <Setter Property="Background" Value="#0078D4"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0086F0"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005A9E"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#2D2D2D"/>
+                    <Setter Property="Foreground" Value="#666666"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="OutlineButtonStyle" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="#444444" 
+                                BorderThickness="1"
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#252525"/>
+                    <Setter Property="BorderBrush" Value="#666666"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#1A1A1A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        
+        <Style TargetType="CheckBox" x:Key="OptionCheckBoxStyle">
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#121212" Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="Dọn Dẹp Hệ Thống Chuyên Sâu" 
+                       Foreground="#FFFFFF" 
+                       FontSize="22" 
+                       FontWeight="SemiBold" 
+                       FontFamily="Segoe UI"/>
+            <TextBlock Text="Dọn dẹp lưu trữ hệ thống: Xóa bộ nhớ đệm cập nhật WinSxS Component Store và dọn dẹp thư mục Windows.old." 
+                       Foreground="#A0A0A0" 
+                       FontSize="13" 
+                       Margin="0,4,0,0" 
+                       FontFamily="Segoe UI"/>
+        </StackPanel>
+
+        
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,16">
+            <StackPanel>
+                
+                <Border BorderBrush="#252525" BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,12">
+                    <StackPanel>
+                        <TextBlock Text="HẠNG MỤC DỌN DẸP CHUYÊN SÂU" Foreground="#00A2ED" FontSize="11" FontWeight="Bold" Margin="0,0,0,8"/>
+                        
+                        <CheckBox x:Name="ChkCleanWinSxS" Style="{StaticResource OptionCheckBoxStyle}" IsChecked="True" Margin="0,6,0,12">
+                            <StackPanel Margin="6,-2,0,0">
+                                <TextBlock Text="Dọn dẹp WinSxS Component Store (Bằng DISM Tool)" Foreground="#FFFFFF" FontWeight="SemiBold"/>
+                                <TextBlock Text="Xóa các phiên bản cập nhật cũ đã thay thế. Có thể tốn từ 10 - 20 phút." Foreground="#888888" FontSize="11" Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </CheckBox>
+
+                        <CheckBox x:Name="ChkDeleteWindowsOld" Style="{StaticResource OptionCheckBoxStyle}" IsChecked="True">
+                            <StackPanel Margin="6,-2,0,0">
+                                <TextBlock Text="Xóa thư mục lưu trữ hệ điều hành cũ (C:\Windows.old)" Foreground="#FFFFFF" FontWeight="SemiBold"/>
+                                <TextBlock Text="Thu hồi dung lượng từ bản cài đặt Windows trước đó. Cần chiếm quyền ghi để xóa." Foreground="#888888" FontSize="11" Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </CheckBox>
+                    </StackPanel>
+                </Border>
+
+                
+                <Border Background="#1E1E1E" BorderBrush="#2D2D2D" BorderThickness="1" CornerRadius="6" Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="THÔNG TIN PHÁT HIỆN" Foreground="#00A2ED" FontSize="11" FontWeight="Bold" Margin="0,0,0,8"/>
+                        <Grid Margin="0,4,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Thư mục C:\Windows.old:" Foreground="#888888" FontSize="13"/>
+                            <TextBlock x:Name="TxtWindowsOldStatus" Text="Đang quét..." Grid.Column="1" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="13" Margin="8,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        
+        <StackPanel Grid.Row="2" Margin="0,0,0,12">
+            <Grid Margin="0,0,0,6">
+                <TextBlock x:Name="TxtStatus" Text="Sẵn sàng dọn dẹp hệ thống." 
+                           Foreground="#A0A0A0" FontSize="13" FontFamily="Segoe UI"/>
+                <TextBlock x:Name="TxtPercentage" Text="" 
+                           Foreground="#00A2ED" FontSize="13" FontWeight="SemiBold" 
+                           HorizontalAlignment="Right" FontFamily="Segoe UI"/>
+            </Grid>
+            <ProgressBar x:Name="ProgBar" Height="4" Background="#1E1E1E" Foreground="#0078D4" 
+                          BorderThickness="0" Minimum="0" Maximum="100" Value="0"/>
+        </StackPanel>
+
+        
+        <Grid Grid.Row="3" Margin="0,0,0,12">
+            <Border Background="#1E1E1E" BorderBrush="#2D2D2D" BorderThickness="1" CornerRadius="4">
+                <TextBox x:Name="TxtLog" 
+                         Background="Transparent" 
+                         Foreground="#A0A0A0" 
+                         BorderThickness="0" 
+                         Padding="12" 
+                         FontFamily="Consolas" 
+                         FontSize="12" 
+                         IsReadOnly="True" 
+                         VerticalScrollBarVisibility="Auto" 
+                         AcceptsReturn="True" 
+                         TextWrapping="Wrap"
+                         Text="--- Nhật ký dọn dẹp nâng cao ---&#x0a;Chờ lệnh từ người dùng..."/>
+            </Border>
+        </Grid>
+
+        
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" x:Name="BtnStartCleanup" 
+                    Content="Bắt đầu dọn dẹp chuyên sâu" 
+                    Style="{StaticResource ModernButtonStyle}" 
+                    Padding="24,12" 
+                    HorizontalAlignment="Left"
+                    Click="BtnStartCleanup_Click"/>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="Chọn tất cả" Style="{StaticResource OutlineButtonStyle}" Click="BtnSelectAll_Click" Margin="0,0,8,0" Padding="12,8"/>
+                <Button Content="Bỏ chọn tất cả" Style="{StaticResource OutlineButtonStyle}" Click="BtnDeselectAll_Click" Padding="12,8"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

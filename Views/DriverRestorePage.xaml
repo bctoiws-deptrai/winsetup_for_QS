@@ -1,0 +1,198 @@
+<UserControl x:Class="BctWinsetup.Views.DriverRestorePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="600">
+    <UserControl.Resources>
+        
+        <Style TargetType="Button" x:Key="ModernButtonStyle">
+            <Setter Property="Background" Value="#0078D4"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0086F0"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005A9E"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#2D2D2D"/>
+                    <Setter Property="Foreground" Value="#666666"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="OutlineButtonStyle" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="#444444" 
+                                BorderThickness="1"
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#252525"/>
+                    <Setter Property="BorderBrush" Value="#666666"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#1A1A1A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="AccentButtonStyle" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#2ECC71"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#27AE60"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#1E824C"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#121212" Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Khôi Phục Driver Hệ Thống" 
+                       Foreground="#FFFFFF" 
+                       FontSize="22" 
+                       FontWeight="SemiBold" 
+                       FontFamily="Segoe UI"/>
+            <TextBlock Text="Cài đặt lại các driver đã lưu trữ trong thư mục bằng cách nhập lại vào Windows Driver Store." 
+                       Foreground="#A0A0A0" 
+                       FontSize="13" 
+                       Margin="0,4,0,0" 
+                       FontFamily="Segoe UI"/>
+        </StackPanel>
+
+        
+        <Grid Grid.Row="1" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Thư mục chứa bản sao lưu Driver:" 
+                       Foreground="#FFFFFF" 
+                       FontSize="13" 
+                       Margin="0,0,0,6" 
+                       FontFamily="Segoe UI"/>
+
+            
+            <TextBox Grid.Row="1" Grid.Column="0" x:Name="TxtSourcePath" 
+                     Background="#1E1E1E" 
+                     Foreground="#FFFFFF" 
+                     BorderBrush="#2D2D2D" 
+                     BorderThickness="1" 
+                     Padding="12,8" 
+                     FontSize="13"
+                     FontFamily="Segoe UI" 
+                     VerticalAlignment="Center"
+                     IsReadOnly="True"
+                     Text="D:\DriverBackup"/>
+
+            
+            <Button Grid.Row="1" Grid.Column="1" x:Name="BtnBrowse" 
+                    Content="Chọn thư mục" 
+                    Style="{StaticResource OutlineButtonStyle}" 
+                    Margin="8,0,0,0" 
+                    Padding="16,8"
+                    Click="BtnBrowse_Click"/>
+        </Grid>
+
+        
+        <StackPanel Grid.Row="2" Margin="0,0,0,16">
+            <Grid Margin="0,0,0,6">
+                <TextBlock x:Name="TxtStatus" Text="Sẵn sàng thực hiện khôi phục driver." 
+                           Foreground="#A0A0A0" FontSize="13" FontFamily="Segoe UI"/>
+                <TextBlock x:Name="TxtPercentage" Text="" 
+                           Foreground="#00A2ED" FontSize="13" FontWeight="SemiBold" 
+                           HorizontalAlignment="Right" FontFamily="Segoe UI"/>
+            </Grid>
+            
+            <ProgressBar x:Name="ProgBar" Height="4" Background="#1E1E1E" Foreground="#0078D4" 
+                         BorderThickness="0" Minimum="0" Maximum="100" Value="0" IsIndeterminate="False"/>
+        </StackPanel>
+
+        
+        <Grid Grid.Row="3" Margin="0,0,0,16">
+            <Border Background="#1E1E1E" BorderBrush="#2D2D2D" BorderThickness="1" CornerRadius="4">
+                <TextBox x:Name="TxtLog" 
+                         Background="Transparent" 
+                         Foreground="#A0A0A0" 
+                         BorderThickness="0" 
+                         Padding="12" 
+                         FontFamily="Consolas" 
+                         FontSize="12" 
+                         IsReadOnly="True" 
+                         VerticalScrollBarVisibility="Auto" 
+                         AcceptsReturn="True" 
+                         TextWrapping="Wrap"
+                         Text="--- Nhật ký khôi phục hệ thống ---&#x0a;Chờ lệnh từ người dùng..."/>
+            </Border>
+        </Grid>
+
+        
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" x:Name="BtnStartRestore" 
+                    Content="Bắt đầu khôi phục" 
+                    Style="{StaticResource ModernButtonStyle}" 
+                    Padding="24,12" 
+                    HorizontalAlignment="Left"
+                    Click="BtnStartRestore_Click"/>
+
+            <Button Grid.Column="1" x:Name="BtnOpenFolder" 
+                    Content="Mở thư mục nguồn" 
+                    Style="{StaticResource AccentButtonStyle}" 
+                    Padding="24,12" 
+                    Click="BtnOpenFolder_Click"/>
+        </Grid>
+    </Grid>
+</UserControl>

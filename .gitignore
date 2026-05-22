@@ -1,0 +1,15 @@
+*.md
+!README.md
+
+bin/
+obj/
+
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
