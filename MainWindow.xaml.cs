@@ -7,6 +7,7 @@ namespace BctWinsetup
     {
         private HomePage? _homePage;
         private DriverBackupPage? _driverBackupPage;
+        private BeforeWinBackupPage? _beforeWinBackupPage;
         private DriverRestorePage? _driverRestorePage;
         private IdentityPage? _identityPage;
         private SoftwareInstallPage? _softwareInstallPage;
@@ -15,26 +16,47 @@ namespace BctWinsetup
         private GuiOptimizePage? _guiOptimizePage;
         private SystemOptimizePage? _systemOptimizePage;
         private DeepCleanupPage? _deepCleanupPage;
+        private RunScriptPage? _runScriptPage;
 
         public MainWindow()
         {
             InitializeComponent();
-            
             NavigateToHome();
+        }
+
+        public void SetupNavigationGroup(bool isBeforeWin)
+        {
+            ColSidebar.Width = new GridLength(230);
+            SidebarGrid.Visibility = Visibility.Visible;
+            SidebarBorder.Visibility = Visibility.Visible;
+
+            if (isBeforeWin)
+            {
+                PnlBeforeWinNav.Visibility = Visibility.Visible;
+                PnlAfterWinNav.Visibility = Visibility.Collapsed;
+                RadDriverBackup.IsChecked = true;
+                NavigateToDriverBackup();
+            }
+            else
+            {
+                PnlBeforeWinNav.Visibility = Visibility.Collapsed;
+                PnlAfterWinNav.Visibility = Visibility.Visible;
+                RadDriverRestore.IsChecked = true;
+                NavigateToDriverRestore();
+            }
         }
 
         private void Navigation_Checked(object sender, RoutedEventArgs e)
         {
-            
             if (MainContentArea == null) return;
 
-            if (sender == RadHome)
-            {
-                NavigateToHome();
-            }
-            else if (sender == RadDriverBackup)
+            if (sender == RadDriverBackup)
             {
                 NavigateToDriverBackup();
+            }
+            else if (sender == RadDataBackup)
+            {
+                NavigateToDataBackup();
             }
             else if (sender == RadDriverRestore)
             {
@@ -68,10 +90,23 @@ namespace BctWinsetup
             {
                 NavigateToDeepCleanup();
             }
+            else if (sender == RadRunScript)
+            {
+                NavigateToRunScript();
+            }
         }
 
-        private void NavigateToHome()
+        private void RadBackToHome_Checked(object sender, RoutedEventArgs e)
         {
+            NavigateToHome();
+        }
+
+        public void NavigateToHome()
+        {
+            ColSidebar.Width = new GridLength(0);
+            SidebarGrid.Visibility = Visibility.Collapsed;
+            SidebarBorder.Visibility = Visibility.Collapsed;
+
             _homePage ??= new HomePage();
             MainContentArea.Content = _homePage;
         }
@@ -80,6 +115,12 @@ namespace BctWinsetup
         {
             _driverBackupPage ??= new DriverBackupPage();
             MainContentArea.Content = _driverBackupPage;
+        }
+
+        private void NavigateToDataBackup()
+        {
+            _beforeWinBackupPage ??= new BeforeWinBackupPage();
+            MainContentArea.Content = _beforeWinBackupPage;
         }
 
         private void NavigateToDriverRestore()
@@ -128,6 +169,12 @@ namespace BctWinsetup
         {
             _deepCleanupPage ??= new DeepCleanupPage();
             MainContentArea.Content = _deepCleanupPage;
+        }
+
+        private void NavigateToRunScript()
+        {
+            _runScriptPage ??= new RunScriptPage();
+            MainContentArea.Content = _runScriptPage;
         }
     }
 }

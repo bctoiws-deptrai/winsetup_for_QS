@@ -12,8 +12,8 @@
             <Setter Property="BorderBrush" Value="#2D2D2D"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="Padding" Value="16"/>
-            <Setter Property="Margin" Value="0,0,12,12"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,0,8,8"/>
         </Style>
     </UserControl.Resources>
 
@@ -24,8 +24,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        
-        <Grid Grid.Row="0" Margin="0,0,0,20">
+        <Grid Grid.Row="0" Margin="0,0,0,16">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -34,17 +33,16 @@
             <StackPanel Grid.Column="0">
                 <TextBlock Text="Hệ Thống Công Cụ Winsetup" 
                            Foreground="#FFFFFF" 
-                           FontSize="24" 
+                           FontSize="22" 
                            FontWeight="SemiBold" 
                            FontFamily="Segoe UI"/>
-                <TextBlock Text="Thông tin cấu hình chi tiết hệ thống và bảng tiện ích thiết lập." 
+                <TextBlock Text="Lựa chọn nhóm tác vụ thiết lập hệ thống hoặc theo dõi cấu hình phần cứng bên dưới." 
                            Foreground="#A0A0A0" 
-                           FontSize="13" 
+                           FontSize="12.5" 
                            Margin="0,4,0,0" 
                            FontFamily="Segoe UI"/>
             </StackPanel>
 
-            
             <Border Grid.Column="1" x:Name="BrdBadge" 
                     Background="#1E2E25" BorderBrush="#2D603A" BorderThickness="1" 
                     CornerRadius="14" Padding="12,6" VerticalAlignment="Center">
@@ -56,19 +54,54 @@
             </Border>
         </Grid>
 
-        
-        <Border Grid.Row="1" Background="#1A2535" BorderBrush="#2B3C58" BorderThickness="1" CornerRadius="8" Padding="14,12" Margin="0,0,0,20">
-            <StackPanel Orientation="Horizontal">
-                <Ellipse Width="12" Height="12" Fill="#00A2ED" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                <TextBlock Text="Hãy thiết lập Định Danh Máy và Khôi Phục Driver khi vừa hoàn tất cài đặt lại Windows." 
-                           Foreground="#00A2ED" 
-                           FontSize="13" 
-                           VerticalAlignment="Center"
-                           FontFamily="Segoe UI"/>
-            </StackPanel>
-        </Border>
+        <Grid Grid.Row="1" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        
+            <Border Grid.Column="0" CornerRadius="12" Cursor="Hand" MouseDown="CardBeforeWin_MouseDown" x:Name="BrdBeforeWin" BorderThickness="1" BorderBrush="#2D2D2D">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#162D4A" Offset="0"/>
+                        <GradientStop Color="#006C8E" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="💾" FontSize="28" Margin="0,0,0,8"/>
+                    <TextBlock Grid.Row="1" Text="TRƯỚC KHI CÀI WIN" Foreground="#FFFFFF" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI" Margin="0,0,0,6"/>
+                    <TextBlock Grid.Row="2" Text="• Sao lưu Driver phần cứng hiện tại&#x0a;• Sao lưu dữ liệu ngoài Desktop (trừ shortcut)&#x0a;• Xuất danh sách phần mềm đang cài trên máy" 
+                               Foreground="#D0D8E0" FontSize="12" LineHeight="18" FontFamily="Segoe UI" TextWrapping="Wrap"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="2" CornerRadius="12" Cursor="Hand" MouseDown="CardAfterWin_MouseDown" x:Name="BrdAfterWin" BorderThickness="1" BorderBrush="#2D2D2D">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#2C1B4D" Offset="0"/>
+                        <GradientStop Color="#5A1A4E" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="⚙️" FontSize="28" Margin="0,0,0,8"/>
+                    <TextBlock Grid.Row="1" Text="SAU KHI CÀI WIN" Foreground="#FFFFFF" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI" Margin="0,0,0,6"/>
+                    <TextBlock Grid.Row="2" Text="• Khôi phục Driver, Cài Font, Cài Phần Mềm&#x0a;• Tối ưu hệ thống, Windows Update &amp; Defender&#x0a;• Xóa log rác, dọn dẹp WinSxS &amp; Windows.old&#x0a;• Tự động chạy script cấu hình tùy chọn" 
+                               Foreground="#EAE0EA" FontSize="12" LineHeight="18" FontFamily="Segoe UI" TextWrapping="Wrap"/>
+                </Grid>
+            </Border>
+        </Grid>
+
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -77,71 +110,60 @@
 
             <TextBlock Grid.Row="0" Text="Thông tin cấu hình phần cứng" 
                        Foreground="#FFFFFF" 
-                       FontSize="15" 
+                       FontSize="14" 
                        FontWeight="Medium" 
-                       Margin="0,0,0,10" 
+                       Margin="0,0,0,8" 
                        FontFamily="Segoe UI"/>
 
-            
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <UniformGrid Columns="2" Margin="0,0,-12,0">
-                    
-                    
-                    <Border Style="{StaticResource CardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="HỆ ĐIỀU HÀNH" Foreground="#A0A0A0" FontSize="10" FontWeight="Bold" Margin="0,0,0,6"/>
-                            <TextBlock x:Name="TxtOsVersion" Text="Loading..." Foreground="#00A2ED" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap"/>
-                            <TextBlock x:Name="TxtOsArchitecture" Text="64-bit Operating System" Foreground="#666666" FontSize="12" Margin="0,4,0,0"/>
-                        </StackPanel>
-                    </Border>
+            <UniformGrid Grid.Row="1" Columns="3" Rows="2" Margin="0,0,-8,0">
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="HỆ ĐIỀU HÀNH" Foreground="#A0A0A0" FontSize="9" FontWeight="Bold" Margin="0,0,0,4"/>
+                        <TextBlock x:Name="TxtOsVersion" Text="Loading..." Foreground="#00A2ED" FontSize="12.5" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="TxtOsArchitecture" Text="64-bit Operating System" Foreground="#666666" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
 
-                    
-                    <Border Style="{StaticResource CardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="TÊN MÁY &amp; TÀI KHOẢN" Foreground="#A0A0A0" FontSize="10" FontWeight="Bold" Margin="0,0,0,6"/>
-                            <TextBlock x:Name="TxtMachineName" Text="Loading..." Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold"/>
-                            <TextBlock x:Name="TxtUserName" Text="User" Foreground="#666666" FontSize="12" Margin="0,4,0,0"/>
-                        </StackPanel>
-                    </Border>
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="TÊN MÁY &amp; USER" Foreground="#A0A0A0" FontSize="9" FontWeight="Bold" Margin="0,0,0,4"/>
+                        <TextBlock x:Name="TxtMachineName" Text="Loading..." Foreground="#FFFFFF" FontSize="12.5" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="TxtUserName" Text="User" Foreground="#666666" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
 
-                    
-                    <Border Style="{StaticResource CardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="BỘ VI XỬ LÝ (CPU)" Foreground="#A0A0A0" FontSize="10" FontWeight="Bold" Margin="0,0,0,6"/>
-                            <TextBlock x:Name="TxtCpuName" Text="Loading..." Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap"/>
-                            <TextBlock x:Name="TxtCpuCores" Text="cores" Foreground="#666666" FontSize="12" Margin="0,4,0,0"/>
-                        </StackPanel>
-                    </Border>
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="BỘ VI XỬ LÝ (CPU)" Foreground="#A0A0A0" FontSize="9" FontWeight="Bold" Margin="0,0,0,4"/>
+                        <TextBlock x:Name="TxtCpuName" Text="Loading..." Foreground="#FFFFFF" FontSize="12.5" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="TxtCpuCores" Text="cores" Foreground="#666666" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
 
-                    
-                    <Border Style="{StaticResource CardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="BỘ NHỚ TRONG (RAM)" Foreground="#A0A0A0" FontSize="10" FontWeight="Bold" Margin="0,0,0,6"/>
-                            <TextBlock x:Name="TxtRamSize" Text="Loading..." Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold"/>
-                            <TextBlock Text="Tổng dung lượng RAM vật lý lắp đặt" Foreground="#666666" FontSize="12" Margin="0,4,0,0"/>
-                        </StackPanel>
-                    </Border>
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="BỘ NHỚ (RAM)" Foreground="#A0A0A0" FontSize="9" FontWeight="Bold" Margin="0,0,0,4"/>
+                        <TextBlock x:Name="TxtRamSize" Text="Loading..." Foreground="#FFFFFF" FontSize="12.5" FontWeight="SemiBold"/>
+                        <TextBlock Text="Dung lượng RAM vật lý" Foreground="#666666" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
 
-                    
-                    <Border Style="{StaticResource CardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="BO MẠCH CHỦ (MAINBOARD)" Foreground="#A0A0A0" FontSize="10" FontWeight="Bold" Margin="0,0,0,6"/>
-                            <TextBlock x:Name="TxtMainboard" Text="Loading..." Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap"/>
-                            <TextBlock Text="Thông tin nhà sản xuất và model máy" Foreground="#666666" FontSize="12" Margin="0,4,0,0"/>
-                        </StackPanel>
-                    </Border>
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="BO MẠCH CHỦ" Foreground="#A0A0A0" FontSize="9" FontWeight="Bold" Margin="0,0,0,4"/>
+                        <TextBlock x:Name="TxtMainboard" Text="Loading..." Foreground="#FFFFFF" FontSize="12.5" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                        <TextBlock Text="Bios &amp; Motherboard" Foreground="#666666" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
 
-                    
-                    <Border Style="{StaticResource CardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="CARD MÀN HÌNH (GPU)" Foreground="#A0A0A0" FontSize="10" FontWeight="Bold" Margin="0,0,0,6"/>
-                            <TextBlock x:Name="TxtGpuName" Text="Loading..." Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap"/>
-                            <TextBlock Text="Danh sách thiết bị đồ họa nhận diện" Foreground="#666666" FontSize="12" Margin="0,4,0,0"/>
-                        </StackPanel>
-                    </Border>
-
-                </UniformGrid>
-            </ScrollViewer>
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="ĐỒ HỌA (GPU)" Foreground="#A0A0A0" FontSize="9" FontWeight="Bold" Margin="0,0,0,4"/>
+                        <TextBlock x:Name="TxtGpuName" Text="Loading..." Foreground="#FFFFFF" FontSize="12.5" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                        <TextBlock Text="Card đồ họa nhận diện" Foreground="#666666" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
         </Grid>
     </Grid>
 </UserControl>

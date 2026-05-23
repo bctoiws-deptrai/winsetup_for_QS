@@ -90,21 +90,17 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            
-            <ColumnDefinition Width="230"/>
-            
+            <ColumnDefinition x:Name="ColSidebar" Width="0"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        
-        <Grid Grid.Column="0" Background="#181818">
+        <Grid x:Name="SidebarGrid" Grid.Column="0" Background="#181818" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            
             <StackPanel Grid.Row="0" Margin="20,28,20,20">
                 <TextBlock Text="BCT WINSETUP" 
                            Foreground="#FFFFFF" 
@@ -119,70 +115,70 @@
                 <Border Height="1" Background="#252525" Margin="0,16,0,0"/>
             </StackPanel>
 
-            
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    
-                    <RadioButton x:Name="RadHome" 
-                                 Content="Trang Chủ" 
-                                 Style="{StaticResource SidebarNavStyle}" 
-                                 IsChecked="True"
-                                 Checked="Navigation_Checked"/>
+                    <StackPanel x:Name="PnlCommonNav">
+                        <RadioButton x:Name="RadBackToHome" 
+                                     Content="◀  Quay Lại Trang Chủ" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="RadBackToHome_Checked"/>
+                        <Border Height="1" Background="#252525" Margin="20,10"/>
+                    </StackPanel>
 
-                    <RadioButton x:Name="RadDriverBackup" 
-                                 Content="Sao Lưu Driver" 
-                                 Style="{StaticResource SidebarNavStyle}"
-                                 Checked="Navigation_Checked"/>
+                    <StackPanel x:Name="PnlBeforeWinNav" Visibility="Collapsed">
+                        <TextBlock Text="TRƯỚC KHI CÀI WIN" Style="{StaticResource SidebarLabelStyle}"/>
+                        <RadioButton x:Name="RadDriverBackup" 
+                                     Content="Sao Lưu Driver" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadDataBackup" 
+                                     Content="Sao Lưu Dữ Liệu" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                    </StackPanel>
 
-                    <RadioButton x:Name="RadDriverRestore" 
-                                 Content="Khôi Phục Driver" 
-                                 Style="{StaticResource SidebarNavStyle}"
-                                 Checked="Navigation_Checked"/>
-
-                    <RadioButton x:Name="RadIdentity" 
-                                 Content="Định Danh Máy" 
-                                 Style="{StaticResource SidebarNavStyle}"
-                                 Checked="Navigation_Checked"/>
-
-                    <RadioButton x:Name="RadSoftwareInstall" 
-                                 Content="Cài Phần Mềm" 
-                                 Style="{StaticResource SidebarNavStyle}"
-                                 Checked="Navigation_Checked"/>
-
-                    <RadioButton x:Name="RadFontInstall" 
-                                 Content="Cài Font Chữ" 
-                                 Style="{StaticResource SidebarNavStyle}"
-                                 Checked="Navigation_Checked"/>
-
-                    <RadioButton x:Name="RadClearLogs" 
-                                 Content="Xóa Log Hệ Thống" 
-                                 Style="{StaticResource SidebarNavStyle}"
-                                 Checked="Navigation_Checked"/>
-
-                    <RadioButton x:Name="RadGuiOptimize" 
-                                 Content="Tối Ưu Giao Diện" 
-                                 Style="{StaticResource SidebarNavStyle}"
-                                 Checked="Navigation_Checked"/>
-
-                    <RadioButton x:Name="RadSystemOptimize" 
-                                 Content="Tối Ưu Hệ Thống" 
-                                 Style="{StaticResource SidebarNavStyle}"
-                                 Checked="Navigation_Checked"/>
-
-                    <RadioButton x:Name="RadDeepCleanup" 
-                                 Content="Dọn Dẹp Nâng Cao" 
-                                 Style="{StaticResource SidebarNavStyle}"
-                                 Checked="Navigation_Checked"/>
-
-                    
-                    <TextBlock Text="TÍNH NĂNG TƯƠNG LAI" Style="{StaticResource SidebarLabelStyle}"/>
-                    
-                    <Button Content="Kích Hoạt Windows (Sắp có)" Style="{StaticResource SidebarPlaceholderStyle}"/>
-                    <Button Content="Quản Lý Startup (Sắp có)" Style="{StaticResource SidebarPlaceholderStyle}"/>
+                    <StackPanel x:Name="PnlAfterWinNav" Visibility="Collapsed">
+                        <TextBlock Text="SAU KHI CÀI WIN" Style="{StaticResource SidebarLabelStyle}"/>
+                        <RadioButton x:Name="RadDriverRestore" 
+                                     Content="Khôi Phục Driver" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadIdentity" 
+                                     Content="Định Danh Máy" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadSoftwareInstall" 
+                                     Content="Cài Phần Mềm" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadFontInstall" 
+                                     Content="Cài Font Chữ" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadClearLogs" 
+                                     Content="Xóa Log Hệ Thống" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadGuiOptimize" 
+                                     Content="Tối Ưu Giao Diện" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadSystemOptimize" 
+                                     Content="Tối Ưu Hệ Thống" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadDeepCleanup" 
+                                     Content="Dọn Dẹp Nâng Cao" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadRunScript" 
+                                     Content="Chạy Script Auto" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
 
-            
             <StackPanel Grid.Row="2" Margin="20,10,20,20">
                 <Border Height="1" Background="#252525" Margin="0,0,0,12"/>
                 <TextBlock Text="Phiên bản 1.0.0" 
@@ -199,10 +195,8 @@
             </StackPanel>
         </Grid>
 
-        
-        <Border Grid.Column="0" BorderBrush="#252525" BorderThickness="0,0,1,0"/>
+        <Border x:Name="SidebarBorder" Grid.Column="0" BorderBrush="#252525" BorderThickness="0,0,1,0" Visibility="Collapsed"/>
 
-        
         <ContentControl Grid.Column="1" x:Name="MainContentArea" Focusable="False"/>
     </Grid>
 </Window>

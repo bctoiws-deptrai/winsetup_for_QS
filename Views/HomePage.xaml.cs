@@ -237,5 +237,17 @@ namespace BctWinsetup.Views
             }
             return gpus;
         }
+
+        private void CardBeforeWin_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.SetupNavigationGroup(isBeforeWin: true);
+        }
+
+        private void CardAfterWin_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.SetupNavigationGroup(isBeforeWin: false);
+        }
     }
 }
