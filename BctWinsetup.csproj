@@ -8,6 +8,15 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>logo.ico</ApplicationIcon>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <IncludeAllContentForSelfContained>true</IncludeAllContentForSelfContained>
   </PropertyGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="splash.png" />
+  </ItemGroup>
 
 </Project>
