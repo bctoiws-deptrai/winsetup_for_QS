@@ -158,6 +158,7 @@ namespace BctWinsetup.Views
                 RefreshUwpAppsAsync(),
                 RefreshServicesAsync(),
                 RefreshHvciStatusAsync(),
+                RefreshPerformanceStatusAsync(),
                 Task.Run(() => Dispatcher.Invoke(RefreshStartupApps))
             );
 
@@ -430,6 +431,108 @@ namespace BctWinsetup.Views
                 TxtHvciStatus.Text = status;
                 TxtHvciStatus.Foreground = color;
             });
+        }
+
+        private async Task RefreshPerformanceStatusAsync()
+        {
+            var states = new Dictionary<string, Tuple<bool, string, Brush>>();
+
+            await Task.Run(() =>
+            {
+                bool visOpt = false;
+                object? visVal = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects", "VisualFXSetting", null);
+                if (visVal is int visInt && visInt == 2) visOpt = true;
+                states["VisualEffects"] = Tuple.Create(visOpt, visOpt ? "[Đã tối ưu]" : "[Mặc định]", visOpt ? (Brush)new SolidColorBrush(Color.FromRgb(16, 124, 65)) : Brushes.Gray);
+
+                bool dvrOpt = false;
+                object? dvrVal = Registry.GetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_Enabled", null);
+                if (dvrVal is int dvrInt && dvrInt == 0) dvrOpt = true;
+                states["GameDvr"] = Tuple.Create(dvrOpt, dvrOpt ? "[Đã tối ưu]" : "[Mặc định]", dvrOpt ? (Brush)new SolidColorBrush(Color.FromRgb(16, 124, 65)) : Brushes.Gray);
+
+                bool priorityOpt = false;
+                object? priVal = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\PriorityControl", "Win32PrioritySeparation", null);
+                if (priVal is int priInt && priInt == 38) priorityOpt = true;
+                states["CpuPriority"] = Tuple.Create(priorityOpt, priorityOpt ? "[Đã tối ưu]" : "[Mặc định]", priorityOpt ? (Brush)new SolidColorBrush(Color.FromRgb(16, 124, 65)) : Brushes.Gray);
+
+                bool pagingOpt = false;
+                object? pagVal = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management", "DisablePagingExecutive", null);
+                if (pagVal is int pagInt && pagInt == 1) pagingOpt = true;
+                states["Paging"] = Tuple.Create(pagingOpt, pagingOpt ? "[Đã tối ưu]" : "[Mặc định]", pagingOpt ? (Brush)new SolidColorBrush(Color.FromRgb(16, 124, 65)) : Brushes.Gray);
+
+                bool cacheOpt = false;
+                object? cacheVal = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management", "LargeSystemCache", null);
+                if (cacheVal is int cacheInt && cacheInt == 1) cacheOpt = true;
+                states["Cache"] = Tuple.Create(cacheOpt, cacheOpt ? "[Đã tối ưu]" : "[Mặc định]", cacheOpt ? (Brush)new SolidColorBrush(Color.FromRgb(16, 124, 65)) : Brushes.Gray);
+
+                bool throttleOpt = false;
+                object? thrVal = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling", "PowerThrottlingOff", null);
+                if (thrVal is int thrInt && thrInt == 1) throttleOpt = true;
+                states["Throttling"] = Tuple.Create(throttleOpt, throttleOpt ? "[Đã tối ưu]" : "[Mặc định]", throttleOpt ? (Brush)new SolidColorBrush(Color.FromRgb(16, 124, 65)) : Brushes.Gray);
+
+                bool dynamicTickOpt = IsDynamicTickDisabled();
+                states["DynamicTick"] = Tuple.Create(dynamicTickOpt, dynamicTickOpt ? "[Đã tối ưu]" : "[Mặc định]", dynamicTickOpt ? (Brush)new SolidColorBrush(Color.FromRgb(16, 124, 65)) : Brushes.Gray);
+
+                bool hagsOpt = false;
+                object? hagsVal = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers", "HwSchMode", null);
+                if (hagsVal is int hagsInt && hagsInt == 2) hagsOpt = true;
+                states["Hags"] = Tuple.Create(hagsOpt, hagsOpt ? "[Đã tối ưu]" : "[Mặc định]", hagsOpt ? (Brush)new SolidColorBrush(Color.FromRgb(16, 124, 65)) : Brushes.Gray);
+            });
+
+            Dispatcher.Invoke(() =>
+            {
+                ChkVisualEffects.IsChecked = states["VisualEffects"].Item1;
+                TxtStatusVisualEffects.Text = states["VisualEffects"].Item2;
+                TxtStatusVisualEffects.Foreground = states["VisualEffects"].Item3;
+
+                ChkGameDvr.IsChecked = states["GameDvr"].Item1;
+                TxtStatusGameDvr.Text = states["GameDvr"].Item2;
+                TxtStatusGameDvr.Foreground = states["GameDvr"].Item3;
+
+                ChkCpuPriority.IsChecked = states["CpuPriority"].Item1;
+                TxtStatusCpuPriority.Text = states["CpuPriority"].Item2;
+                TxtStatusCpuPriority.Foreground = states["CpuPriority"].Item3;
+
+                ChkPaging.IsChecked = states["Paging"].Item1;
+                TxtStatusPaging.Text = states["Paging"].Item2;
+                TxtStatusPaging.Foreground = states["Paging"].Item3;
+
+                ChkCache.IsChecked = states["Cache"].Item1;
+                TxtStatusCache.Text = states["Cache"].Item2;
+                TxtStatusCache.Foreground = states["Cache"].Item3;
+
+                ChkThrottling.IsChecked = states["Throttling"].Item1;
+                TxtStatusThrottling.Text = states["Throttling"].Item2;
+                TxtStatusThrottling.Foreground = states["Throttling"].Item3;
+
+                ChkDynamicTick.IsChecked = states["DynamicTick"].Item1;
+                TxtStatusDynamicTick.Text = states["DynamicTick"].Item2;
+                TxtStatusDynamicTick.Foreground = states["DynamicTick"].Item3;
+
+                ChkHags.IsChecked = states["Hags"].Item1;
+                TxtStatusHags.Text = states["Hags"].Item2;
+                TxtStatusHags.Foreground = states["Hags"].Item3;
+            });
+        }
+
+        private bool IsDynamicTickDisabled()
+        {
+            try
+            {
+                using var process = new Process();
+                process.StartInfo.FileName = "bcdedit.exe";
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.CreateNoWindow = true;
+                process.Start();
+                string output = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+                return output.IndexOf("disabledynamictick", StringComparison.OrdinalIgnoreCase) >= 0 &&
+                       output.IndexOf("Yes", StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void RefreshStartupApps()
@@ -812,32 +915,160 @@ namespace BctWinsetup.Views
 
         private async void BtnApplyPerformance_Click(object sender, RoutedEventArgs e)
         {
+            await ApplyPerformanceSettingsAsync(false);
+        }
+
+        private async void BtnRestorePerformance_Click(object sender, RoutedEventArgs e)
+        {
+            await ApplyPerformanceSettingsAsync(true);
+        }
+
+        private async Task ApplyPerformanceSettingsAsync(bool forceDefaultAll)
+        {
             ProgBar.IsIndeterminate = true;
-            TxtStatus.Text = "Đang áp dụng cấu hình hiệu năng...";
-            AppendLog("Áp dụng cấu hình registry tối ưu hiệu năng CPU và đồ họa...");
+            TxtStatus.Text = forceDefaultAll ? "Đang khôi phục cấu hình mặc định..." : "Đang áp dụng cấu hình hiệu năng...";
+            AppendLog(forceDefaultAll ? "Bắt đầu khôi phục các thiết lập Windows về mặc định..." : "Bắt đầu áp dụng tinh chỉnh hiệu năng hệ thống...");
+
+            bool visualEffects = false;
+            bool gameDvr = false;
+            bool cpuPriority = false;
+            bool paging = false;
+            bool cache = false;
+            bool throttling = false;
+            bool dynamicTick = false;
+            bool hags = false;
+
+            Dispatcher.Invoke(() =>
+            {
+                if (forceDefaultAll)
+                {
+                    ChkVisualEffects.IsChecked = false;
+                    ChkGameDvr.IsChecked = false;
+                    ChkCpuPriority.IsChecked = false;
+                    ChkPaging.IsChecked = false;
+                    ChkCache.IsChecked = false;
+                    ChkThrottling.IsChecked = false;
+                    ChkDynamicTick.IsChecked = false;
+                    ChkHags.IsChecked = false;
+                }
+
+                visualEffects = ChkVisualEffects.IsChecked == true;
+                gameDvr = ChkGameDvr.IsChecked == true;
+                cpuPriority = ChkCpuPriority.IsChecked == true;
+                paging = ChkPaging.IsChecked == true;
+                cache = ChkCache.IsChecked == true;
+                throttling = ChkThrottling.IsChecked == true;
+                dynamicTick = ChkDynamicTick.IsChecked == true;
+                hags = ChkHags.IsChecked == true;
+            });
 
             await Task.Run(() =>
             {
                 try
                 {
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects", "VisualFXSetting", 2, RegistryValueKind.DWord);
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", "0", RegistryValueKind.String);
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", "0", RegistryValueKind.String);
+                    if (visualEffects)
+                    {
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects", "VisualFXSetting", 2, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", "0", RegistryValueKind.String);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", "0", RegistryValueKind.String);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã tối ưu hiệu ứng đồ họa (tắt hoạt ảnh, bóng đổ)."));
+                    }
+                    else
+                    {
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects", "VisualFXSetting", 1, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", "1", RegistryValueKind.String);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", "1", RegistryValueKind.String);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã khôi phục hiệu ứng đồ họa mặc định."));
+                    }
 
-                    Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_Enabled", 0, RegistryValueKind.DWord);
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR", "AppCaptureEnabled", 0, RegistryValueKind.DWord);
+                    if (gameDvr)
+                    {
+                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_Enabled", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR", "AppCaptureEnabled", 0, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã tắt chế độ ghi hình ngầm Game DVR của Xbox."));
+                    }
+                    else
+                    {
+                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_Enabled", 1, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR", "AppCaptureEnabled", 1, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã bật lại chế độ ghi hình ngầm Game DVR mặc định."));
+                    }
 
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\PriorityControl", "Win32PrioritySeparation", 38, RegistryValueKind.DWord);
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile", "SystemResponsiveness", 0, RegistryValueKind.DWord);
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile", "NetworkThrottlingIndex", -1, RegistryValueKind.DWord);
+                    if (cpuPriority)
+                    {
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\PriorityControl", "Win32PrioritySeparation", 38, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile", "SystemResponsiveness", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile", "NetworkThrottlingIndex", -1, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã tối ưu độ trễ hệ thống và ưu tiên CPU cho Foreground Apps."));
+                    }
+                    else
+                    {
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\PriorityControl", "Win32PrioritySeparation", 2, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile", "SystemResponsiveness", 20, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile", "NetworkThrottlingIndex", 10, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã khôi phục mức độ ưu tiên CPU mặc định."));
+                    }
 
-                    Dispatcher.Invoke(() => AppendLog("[Thành công] Đã cấu hình registry cho Visual Effects (Tối ưu), Game DVR (Tắt) và System Responsiveness (CPU tối đa)."));
+                    if (paging)
+                    {
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management", "DisablePagingExecutive", 1, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã buộc nhân hệ thống Windows lưu trên RAM vật lý."));
+                    }
+                    else
+                    {
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management", "DisablePagingExecutive", 0, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã khôi phục lưu nhân hệ thống mặc định (cho phép ghi ổ cứng)."));
+                    }
+
+                    if (cache)
+                    {
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management", "LargeSystemCache", 1, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã tăng kích thước bộ đệm hệ thống LargeSystemCache."));
+                    }
+                    else
+                    {
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management", "LargeSystemCache", 0, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã đặt LargeSystemCache về mặc định."));
+                    }
+
+                    if (throttling)
+                    {
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling", "PowerThrottlingOff", 1, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã tắt giới hạn năng lượng CPU chạy nền (Power Throttling)."));
+                    }
+                    else
+                    {
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling", "PowerThrottlingOff", 0, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã bật giới hạn năng lượng CPU chạy nền mặc định."));
+                    }
+
+                    if (dynamicTick)
+                    {
+                        RunCommand("bcdedit.exe", "/set disabledynamictick yes");
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã tắt tiết kiệm năng lượng CPU khi nhàn rỗi (Dynamic Tick)."));
+                    }
+                    else
+                    {
+                        RunCommand("bcdedit.exe", "/set disabledynamictick no");
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã bật tiết kiệm năng lượng CPU Dynamic Tick mặc định."));
+                    }
+
+                    if (hags)
+                    {
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers", "HwSchMode", 2, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã bật Lập lịch tăng tốc GPU bằng phần cứng (HAGS)."));
+                    }
+                    else
+                    {
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers", "HwSchMode", 1, RegistryValueKind.DWord);
+                        Dispatcher.Invoke(() => AppendLog("  -> Đã tắt Lập lịch tăng tốc GPU HAGS mặc định."));
+                    }
 
                     foreach (var proc in Process.GetProcessesByName("explorer"))
                     {
                         proc.Kill();
                     }
-                    Dispatcher.Invoke(() => AppendLog("[Thành công] Khởi động lại Windows Explorer để áp dụng hiệu ứng giao diện mới."));
+                    Dispatcher.Invoke(() => AppendLog("  -> Đã khởi động lại Windows Explorer để áp dụng hiệu ứng đồ họa mới."));
                 }
                 catch (Exception ex)
                 {
@@ -845,51 +1076,13 @@ namespace BctWinsetup.Views
                 }
             });
 
-            ProgBar.IsIndeterminate = false;
-            ProgBar.Value = 100;
-            TxtPercentage.Text = "100%";
-            TxtStatus.Text = "Áp dụng cấu hình tối ưu thành công!";
-        }
-
-        private async void BtnRestorePerformance_Click(object sender, RoutedEventArgs e)
-        {
-            ProgBar.IsIndeterminate = true;
-            TxtStatus.Text = "Đang khôi phục cấu hình mặc định...";
-            AppendLog("Khôi phục cấu hình mặc định của Windows...");
-
-            await Task.Run(() =>
-            {
-                try
-                {
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects", "VisualFXSetting", 1, RegistryValueKind.DWord);
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", "1", RegistryValueKind.String);
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", "1", RegistryValueKind.String);
-
-                    Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_Enabled", 1, RegistryValueKind.DWord);
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR", "AppCaptureEnabled", 1, RegistryValueKind.DWord);
-
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\PriorityControl", "Win32PrioritySeparation", 2, RegistryValueKind.DWord);
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile", "SystemResponsiveness", 20, RegistryValueKind.DWord);
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile", "NetworkThrottlingIndex", 10, RegistryValueKind.DWord);
-
-                    Dispatcher.Invoke(() => AppendLog("[Mặc định] Đã đặt lại cấu hình registry về mặc định."));
-
-                    foreach (var proc in Process.GetProcessesByName("explorer"))
-                    {
-                        proc.Kill();
-                    }
-                    Dispatcher.Invoke(() => AppendLog("[Mặc định] Đã khởi động lại Windows Explorer."));
-                }
-                catch (Exception ex)
-                {
-                    Dispatcher.Invoke(() => AppendLog($"[Lỗi] Khôi phục tinh chỉnh: {ex.Message}"));
-                }
-            });
+            await RefreshPerformanceStatusAsync();
 
             ProgBar.IsIndeterminate = false;
             ProgBar.Value = 100;
             TxtPercentage.Text = "100%";
-            TxtStatus.Text = "Khôi phục cấu hình mặc định thành công!";
+            TxtStatus.Text = forceDefaultAll ? "Khôi phục cấu hình mặc định thành công!" : "Áp dụng cấu hình tối ưu thành công!";
+            AppendLog(forceDefaultAll ? "=== KHÔI PHỤC MẶC ĐỊNH HOÀN TẤT ===" : "=== ÁP DỤNG TINH CHỈNH HOÀN TẤT ===");
         }
 
         private async void BtnDisableHvci_Click(object sender, RoutedEventArgs e)

@@ -226,7 +226,43 @@
                             <Border Background="#1E1E1E" BorderBrush="#2D2D2D" BorderThickness="1" CornerRadius="6" Padding="16" Margin="0,0,0,16">
                                 <StackPanel>
                                     <TextBlock Text="Tinh Chỉnh Hiệu Năng Hệ Thống" Foreground="#FFFFFF" FontWeight="Bold" FontSize="14"/>
-                                    <TextBlock Text="Áp dụng cấu hình registry để tối ưu phản hồi CPU, tắt hiệu ứng đồ họa không cần thiết, và tắt Game DVR chạy ngầm." Foreground="#888888" FontSize="11" Margin="0,4,0,12" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Chọn các tinh chỉnh hiệu năng CPU, RAM và GPU bạn muốn áp dụng. Di chuột lên dòng để xem chi tiết." Foreground="#888888" FontSize="11" Margin="0,4,0,12" TextWrapping="Wrap"/>
+                                    
+                                    <StackPanel Margin="0,0,0,16">
+                                        <DockPanel Margin="0,4">
+                                            <TextBlock x:Name="TxtStatusVisualEffects" Text="Đang đọc..." DockPanel.Dock="Right" Foreground="#FFC107" FontSize="11" VerticalAlignment="Center"/>
+                                            <CheckBox x:Name="ChkVisualEffects" Content="Tối ưu đồ họa Windows (Visual Effects)" Style="{StaticResource OptionCheckBoxStyle}" ToolTip="Tắt các hiệu ứng hoạt ảnh, bóng đổ và độ trong suốt của cửa sổ để tiết kiệm tài nguyên GPU/CPU."/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0,4">
+                                            <TextBlock x:Name="TxtStatusGameDvr" Text="Đang đọc..." DockPanel.Dock="Right" Foreground="#FFC107" FontSize="11" VerticalAlignment="Center"/>
+                                            <CheckBox x:Name="ChkGameDvr" Content="Tắt chế độ ghi hình ngầm Game DVR" Style="{StaticResource OptionCheckBoxStyle}" ToolTip="Ngăn Windows tự động quay phim màn hình trò chơi chạy ngầm, giúp giải phóng CPU và tăng khung hình FPS."/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0,4">
+                                            <TextBlock x:Name="TxtStatusCpuPriority" Text="Đang đọc..." DockPanel.Dock="Right" Foreground="#FFC107" FontSize="11" VerticalAlignment="Center"/>
+                                            <CheckBox x:Name="ChkCpuPriority" Content="Tối ưu ưu tiên phản hồi CPU" Style="{StaticResource OptionCheckBoxStyle}" ToolTip="Cấu hình CPU ưu tiên tài nguyên tính toán tối đa cho ứng dụng đang hoạt động ở Foreground thay vì các tiến trình chạy ngầm."/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0,4">
+                                            <TextBlock x:Name="TxtStatusPaging" Text="Đang đọc..." DockPanel.Dock="Right" Foreground="#FFC107" FontSize="11" VerticalAlignment="Center"/>
+                                            <CheckBox x:Name="ChkPaging" Content="Buộc nhân hệ thống lưu trên RAM (Disable Paging)" Style="{StaticResource OptionCheckBoxStyle}" ToolTip="Bắt buộc giữ tệp nhân hệ thống và driver chạy trực tiếp trên RAM vật lý thay vì ghi vào ổ cứng ảo (PageFile). Khuyên dùng cho máy từ 16GB RAM."/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0,4">
+                                            <TextBlock x:Name="TxtStatusCache" Text="Đang đọc..." DockPanel.Dock="Right" Foreground="#FFC107" FontSize="11" VerticalAlignment="Center"/>
+                                            <CheckBox x:Name="ChkCache" Content="Tăng kích thước bộ đệm hệ thống (Large Cache)" Style="{StaticResource OptionCheckBoxStyle}" ToolTip="Phân bổ nhiều RAM hơn để làm bộ đệm cache đọc/ghi dữ liệu ổ cứng, giúp tải ứng dụng nặng nhanh hơn."/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0,4">
+                                            <TextBlock x:Name="TxtStatusThrottling" Text="Đang đọc..." DockPanel.Dock="Right" Foreground="#FFC107" FontSize="11" VerticalAlignment="Center"/>
+                                            <CheckBox x:Name="ChkThrottling" Content="Tắt giới hạn năng lượng CPU (Power Throttling)" Style="{StaticResource OptionCheckBoxStyle}" ToolTip="Tắt chế độ Windows tự động giảm xung nhịp của ứng dụng chạy nền. Đảm bảo hiệu năng tối đa cho render, download ngầm."/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0,4">
+                                            <TextBlock x:Name="TxtStatusDynamicTick" Text="Đang đọc..." DockPanel.Dock="Right" Foreground="#FFC107" FontSize="11" VerticalAlignment="Center"/>
+                                            <CheckBox x:Name="ChkDynamicTick" Content="Tắt tiết kiệm năng lượng CPU khi rảnh (Dynamic Tick)" Style="{StaticResource OptionCheckBoxStyle}" ToolTip="Ngăn CPU tự động hạ xung nhịp quá sâu khi nhàn rỗi để tránh trễ chu kỳ xung nhịp và giảm micro-stuttering."/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0,4">
+                                            <TextBlock x:Name="TxtStatusHags" Text="Đang đọc..." DockPanel.Dock="Right" Foreground="#FFC107" FontSize="11" VerticalAlignment="Center"/>
+                                            <CheckBox x:Name="ChkHags" Content="Bật lập lịch tăng tốc GPU bằng phần cứng (HAGS)" Style="{StaticResource OptionCheckBoxStyle}" ToolTip="Cho phép GPU tự quản lý bộ nhớ của mình để giảm tải công việc cho CPU, cải thiện FPS và giảm nghẽn cổ chai."/>
+                                        </DockPanel>
+                                    </StackPanel>
+
                                     <StackPanel Orientation="Horizontal">
                                         <Button Content="Áp dụng tối ưu" Style="{StaticResource ModernButtonStyle}" Click="BtnApplyPerformance_Click" Padding="20,10"/>
                                         <Button Content="Khôi phục mặc định" Style="{StaticResource OutlineButtonStyle}" Click="BtnRestorePerformance_Click" Margin="8,0,0,0" Padding="16,10"/>
