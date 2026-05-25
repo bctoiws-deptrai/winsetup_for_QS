@@ -321,16 +321,18 @@ namespace BctWinsetup.Views
                                 }
                                 catch { }
 
+                                logger.Report($"[Xóa Event Log] {logName} ({FormatSize(logSize)})");
                                 session.ClearLog(logName);
                                 clearedBytes += logSize;
                                 clearedCount++;
+                                System.Threading.Thread.Sleep(5);
                             }
                             catch
                             {
                                 failedCount++;
                             }
                         }
-                        logger.Report($"[Sự kiện] Đã dọn dẹp sạch {clearedCount} kênh Event Log. Bỏ qua {failedCount} kênh.");
+                        logger.Report($"\n>>> Dọn dẹp thành công {clearedCount} kênh Event Log. Bỏ qua {failedCount} kênh.");
                     }
                     catch (Exception ex)
                     {
