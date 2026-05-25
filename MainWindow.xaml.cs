@@ -17,6 +17,7 @@ namespace BctWinsetup
         private SystemOptimizePage? _systemOptimizePage;
         private DeepCleanupPage? _deepCleanupPage;
         private RunScriptPage? _runScriptPage;
+        private SuperOptimizePage? _superOptimizePage;
 
         public MainWindow()
         {
@@ -89,6 +90,10 @@ namespace BctWinsetup
             else if (sender == RadDeepCleanup)
             {
                 NavigateToDeepCleanup();
+            }
+            else if (sender == RadSuperOptimize)
+            {
+                NavigateToSuperOptimize();
             }
             else if (sender == RadRunScript)
             {
@@ -169,6 +174,12 @@ namespace BctWinsetup
         {
             _deepCleanupPage ??= new DeepCleanupPage();
             MainContentArea.Content = _deepCleanupPage;
+        }
+
+        private void NavigateToSuperOptimize()
+        {
+            _superOptimizePage ??= new SuperOptimizePage();
+            MainContentArea.Content = _superOptimizePage;
         }
 
         private void NavigateToRunScript()

@@ -171,6 +171,10 @@
                                      Content="Dọn Dẹp Nâng Cao" 
                                      Style="{StaticResource SidebarNavStyle}"
                                      Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadSuperOptimize" 
+                                     Content="Siêu Tối Ưu" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
                         <RadioButton x:Name="RadRunScript" 
                                      Content="Chạy Script Auto" 
                                      Style="{StaticResource SidebarNavStyle}"

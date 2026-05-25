@@ -1,0 +1,313 @@
+<UserControl x:Class="BctWinsetup.Views.SuperOptimizePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="700">
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="ModernButtonStyle">
+            <Setter Property="Background" Value="#0078D4"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0086F0"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005A9E"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#2D2D2D"/>
+                    <Setter Property="Foreground" Value="#666666"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="DangerButtonStyle" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#A80000"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C30000"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#7E0000"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#2D2D2D"/>
+                    <Setter Property="Foreground" Value="#666666"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="SuccessButtonStyle" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#107C41"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#108F4C"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#0A5C30"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#2D2D2D"/>
+                    <Setter Property="Foreground" Value="#666666"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="OutlineButtonStyle" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="#444444" 
+                                BorderThickness="1"
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#252525"/>
+                    <Setter Property="BorderBrush" Value="#666666"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#1A1A1A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="CheckBox" x:Key="OptionCheckBoxStyle">
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#121212" Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="120"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="Siêu Tối Ưu Hệ Thống" 
+                       Foreground="#FFFFFF" 
+                       FontSize="22" 
+                       FontWeight="SemiBold" 
+                       FontFamily="Segoe UI"/>
+            <TextBlock Text="Gỡ cài đặt phần mềm mặc định Windows, quản lý dịch vụ nền để giảm tải RAM/CPU tối đa." 
+                       Foreground="#A0A0A0" 
+                       FontSize="13" 
+                       Margin="0,4,0,0" 
+                       FontFamily="Segoe UI"/>
+        </StackPanel>
+
+        <TabControl Grid.Row="1" Background="#181818" BorderBrush="#252525" BorderThickness="1" Margin="0,0,0,16" Padding="12">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{TemplateBinding Content}" Margin="12,6"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="#A0A0A0"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="FontFamily" Value="Segoe UI"/>
+                    <Setter Property="FontSize" Value="13"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border x:Name="Border" Background="{TemplateBinding Background}" BorderThickness="0,0,0,2" BorderBrush="Transparent">
+                                    <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Foreground" Value="#00A2ED"/>
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="#00A2ED"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+
+            <TabItem Header="Ứng Dụng Mặc Định (UWP)">
+                <Grid Margin="0,8,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="0,0,0,12">
+                        <StackPanel x:Name="PnlUwpList"/>
+                    </ScrollViewer>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Button x:Name="BtnUninstallUwp" Content="Gỡ ứng dụng đã chọn" Style="{StaticResource DangerButtonStyle}" Padding="20,10" Click="BtnUninstallUwp_Click"/>
+                        <Button Content="Chọn tất cả" Style="{StaticResource OutlineButtonStyle}" Click="BtnSelectAllUwp_Click" Margin="8,0,0,0"/>
+                        <Button Content="Bỏ chọn tất cả" Style="{StaticResource OutlineButtonStyle}" Click="BtnDeselectAllUwp_Click" Margin="8,0,0,0"/>
+                        <Button Content="Quét lại" Style="{StaticResource OutlineButtonStyle}" Click="BtnRefreshUwp_Click" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Dịch Vụ Windows (Services)">
+                <Grid Margin="0,8,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="0,0,0,12">
+                        <StackPanel x:Name="PnlServicesList"/>
+                    </ScrollViewer>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Button x:Name="BtnDisableServices" Content="Tắt dịch vụ đã chọn" Style="{StaticResource DangerButtonStyle}" Padding="20,10" Click="BtnDisableServices_Click"/>
+                        <Button x:Name="BtnRestoreServices" Content="Khôi phục mặc định" Style="{StaticResource OutlineButtonStyle}" Padding="16,10" Click="BtnRestoreServices_Click" Margin="8,0,0,0"/>
+                        <Button Content="Chọn tất cả" Style="{StaticResource OutlineButtonStyle}" Click="BtnSelectAllServices_Click" Margin="8,0,0,0"/>
+                        <Button Content="Bỏ chọn tất cả" Style="{StaticResource OutlineButtonStyle}" Click="BtnDeselectAllServices_Click" Margin="8,0,0,0"/>
+                        <Button Content="Quét lại" Style="{StaticResource OutlineButtonStyle}" Click="BtnRefreshServices_Click" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Tối Ưu Hiệu Năng Nâng Cao">
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="280"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,16,0">
+                        <StackPanel>
+                            <Border Background="#1E1E1E" BorderBrush="#2D2D2D" BorderThickness="1" CornerRadius="6" Padding="16" Margin="0,0,0,16">
+                                <StackPanel>
+                                    <TextBlock Text="Giải Phóng RAM Vật Lý (Memory Cleaner)" Foreground="#FFFFFF" FontWeight="Bold" FontSize="14"/>
+                                    <TextBlock Text="Ép toàn bộ các tiến trình đang chạy thu dọn bộ nhớ và đẩy phần thừa vào pagefile. Giúp giải phóng lập tức dung lượng RAM vật lý đang bị chiếm dụng ảo." Foreground="#888888" FontSize="11" Margin="0,4,0,12" TextWrapping="Wrap"/>
+                                    <Button Content="Giải Phóng RAM Ngay" Style="{StaticResource SuccessButtonStyle}" Click="BtnCleanRam_Click" HorizontalAlignment="Left" Padding="20,10"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="#1E1E1E" BorderBrush="#2D2D2D" BorderThickness="1" CornerRadius="6" Padding="16" Margin="0,0,0,16">
+                                <StackPanel>
+                                    <TextBlock Text="Tinh Chỉnh Hiệu Năng Hệ Thống" Foreground="#FFFFFF" FontWeight="Bold" FontSize="14"/>
+                                    <TextBlock Text="Áp dụng cấu hình registry để tối ưu phản hồi CPU, tắt hiệu ứng đồ họa không cần thiết, và tắt Game DVR chạy ngầm." Foreground="#888888" FontSize="11" Margin="0,4,0,12" TextWrapping="Wrap"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Áp dụng tối ưu" Style="{StaticResource ModernButtonStyle}" Click="BtnApplyPerformance_Click" Padding="20,10"/>
+                                        <Button Content="Khôi phục mặc định" Style="{StaticResource OutlineButtonStyle}" Click="BtnRestorePerformance_Click" Margin="8,0,0,0" Padding="16,10"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="#1E1E1E" BorderBrush="#2D2D2D" BorderThickness="1" CornerRadius="6" Padding="16">
+                                <StackPanel>
+                                    <TextBlock Text="Tính năng Cách Ly Lõi (Memory Integrity)" Foreground="#FFFFFF" FontWeight="Bold" FontSize="14"/>
+                                    <Grid Margin="0,4,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Trạng thái hiện tại: " Foreground="#888888" FontSize="12"/>
+                                        <TextBlock x:Name="TxtHvciStatus" Text="Đang đọc..." Grid.Column="1" Foreground="#FFC107" FontSize="12" FontWeight="Bold"/>
+                                    </Grid>
+                                    <TextBlock Text="Memory Integrity (HVCI) bảo vệ hệ thống nhưng làm giảm 5% - 15% hiệu năng CPU (đặc biệt khi chơi game/render). Tắt đi để có hiệu năng CPU tối đa." Foreground="#888888" FontSize="11" Margin="0,0,0,12" TextWrapping="Wrap"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Tắt HVCI (Tối ưu CPU)" Style="{StaticResource DangerButtonStyle}" Click="BtnDisableHvci_Click" Padding="16,10"/>
+                                        <Button Content="Bật HVCI (Bảo mật)" Style="{StaticResource SuccessButtonStyle}" Click="BtnEnableHvci_Click" Margin="8,0,0,0" Padding="16,10"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Border Grid.Column="1" Background="#1E1E1E" BorderBrush="#2D2D2D" BorderThickness="1" CornerRadius="6" Padding="16">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Ứng Dụng Khởi Động (Startup)" Foreground="#FFFFFF" FontWeight="Bold" FontSize="14"/>
+                            <TextBlock Grid.Row="1" Text="Bỏ chọn để tắt bớt ứng dụng khởi động cùng Windows giúp máy mở nhanh hơn." Foreground="#888888" FontSize="11" Margin="0,4,0,12" TextWrapping="Wrap"/>
+
+                            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="0,0,0,12">
+                                <StackPanel x:Name="PnlStartupList"/>
+                            </ScrollViewer>
+
+                            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                                <Button Content="Lưu cài đặt khởi động" Style="{StaticResource ModernButtonStyle}" Click="BtnApplyStartup_Click" Padding="16,8"/>
+                                <Button Content="Quét lại" Style="{StaticResource OutlineButtonStyle}" Click="BtnRefreshStartup_Click" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="2" Margin="0,0,0,12">
+            <Grid Margin="0,0,0,6">
+                <TextBlock x:Name="TxtStatus" Text="Sẵn sàng thực thi tối ưu hệ thống." 
+                           Foreground="#A0A0A0" FontSize="13" FontFamily="Segoe UI"/>
+                <TextBlock x:Name="TxtPercentage" Text="" 
+                           Foreground="#00A2ED" FontSize="13" FontWeight="SemiBold" 
+                           HorizontalAlignment="Right" FontFamily="Segoe UI"/>
+            </Grid>
+            <ProgressBar x:Name="ProgBar" Height="4" Background="#1E1E1E" Foreground="#0078D4" 
+                          BorderThickness="0" Minimum="0" Maximum="100" Value="0"/>
+        </StackPanel>
+
+        <Grid Grid.Row="3">
+            <Border Background="#1E1E1E" BorderBrush="#2D2D2D" BorderThickness="1" CornerRadius="4">
+                <TextBox x:Name="TxtLog" 
+                         Background="Transparent" 
+                         Foreground="#A0A0A0" 
+                         BorderThickness="0" 
+                         Padding="12" 
+                         FontFamily="Consolas" 
+                         FontSize="12" 
+                         IsReadOnly="True" 
+                         VerticalScrollBarVisibility="Auto" 
+                         AcceptsReturn="True" 
+                         TextWrapping="Wrap"
+                         Text="--- Nhật ký siêu tối ưu hệ thống ---&#x0a;Chờ lệnh từ người dùng..."/>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
