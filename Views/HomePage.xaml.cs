@@ -249,5 +249,11 @@ namespace BctWinsetup.Views
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.SetupNavigationGroup(isBeforeWin: false);
         }
+
+        private void CardDeepBoot_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.SetupNavigationGroupDeepBoot();
+        }
     }
 }

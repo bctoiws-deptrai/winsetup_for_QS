@@ -57,7 +57,9 @@
         <Grid Grid.Row="1" Margin="0,0,0,16">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -96,8 +98,28 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="⚙️" FontSize="28" Margin="0,0,0,8"/>
                     <TextBlock Grid.Row="1" Text="SAU KHI CÀI WIN" Foreground="#FFFFFF" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI" Margin="0,0,0,6"/>
-                    <TextBlock Grid.Row="2" Text="• Khôi phục Driver, Cài Font, Cài Phần Mềm&#x0a;• Tối ưu hệ thống, Windows Update &amp; Defender&#x0a;• Xóa log rác, dọn dẹp WinSxS &amp; Windows.old&#x0a;• Tự động chạy script cấu hình tùy chọn" 
+                    <TextBlock Grid.Row="2" Text="• Khôi phục Driver, Định danh máy&#x0a;• Cài đặt phần mềm &amp; Font chữ hệ thống&#x0a;• Tối ưu giao diện, Xóa log lịch sử&#x0a;• Tự động chạy script cấu hình tùy chọn" 
                                Foreground="#EAE0EA" FontSize="12" LineHeight="18" FontFamily="Segoe UI" TextWrapping="Wrap"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="4" CornerRadius="12" Cursor="Hand" MouseDown="CardDeepBoot_MouseDown" x:Name="BrdDeepBoot" BorderThickness="1" BorderBrush="#2D2D2D">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#113238" Offset="0"/>
+                        <GradientStop Color="#006B70" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="🚀" FontSize="28" Margin="0,0,0,8"/>
+                    <TextBlock Grid.Row="1" Text="DEEP-BOOT" Foreground="#FFFFFF" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI" Margin="0,0,0,6"/>
+                    <TextBlock Grid.Row="2" Text="• Tối ưu hiệu năng CPU, RAM và GPU&#x0a;• Dọn dẹp nâng cao WinSxS &amp; Windows.old&#x0a;• Siêu tối ưu gỡ UWP, tắt service, dọn RAM" 
+                               Foreground="#D0E5E5" FontSize="12" LineHeight="18" FontFamily="Segoe UI" TextWrapping="Wrap"/>
                 </Grid>
             </Border>
         </Grid>

@@ -163,6 +163,14 @@
                                      Content="Tối Ưu Giao Diện" 
                                      Style="{StaticResource SidebarNavStyle}"
                                      Checked="Navigation_Checked"/>
+                        <RadioButton x:Name="RadRunScript" 
+                                     Content="Chạy Script Auto" 
+                                     Style="{StaticResource SidebarNavStyle}"
+                                     Checked="Navigation_Checked"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="PnlDeepBootNav" Visibility="Collapsed">
+                        <TextBlock Text="DEEP-BOOT" Style="{StaticResource SidebarLabelStyle}"/>
                         <RadioButton x:Name="RadSystemOptimize" 
                                      Content="Tối Ưu Hệ Thống" 
                                      Style="{StaticResource SidebarNavStyle}"
@@ -173,10 +181,6 @@
                                      Checked="Navigation_Checked"/>
                         <RadioButton x:Name="RadSuperOptimize" 
                                      Content="Siêu Tối Ưu" 
-                                     Style="{StaticResource SidebarNavStyle}"
-                                     Checked="Navigation_Checked"/>
-                        <RadioButton x:Name="RadRunScript" 
-                                     Content="Chạy Script Auto" 
                                      Style="{StaticResource SidebarNavStyle}"
                                      Checked="Navigation_Checked"/>
                     </StackPanel>

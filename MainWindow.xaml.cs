@@ -35,6 +35,7 @@ namespace BctWinsetup
             {
                 PnlBeforeWinNav.Visibility = Visibility.Visible;
                 PnlAfterWinNav.Visibility = Visibility.Collapsed;
+                PnlDeepBootNav.Visibility = Visibility.Collapsed;
                 RadDriverBackup.IsChecked = true;
                 NavigateToDriverBackup();
             }
@@ -42,9 +43,23 @@ namespace BctWinsetup
             {
                 PnlBeforeWinNav.Visibility = Visibility.Collapsed;
                 PnlAfterWinNav.Visibility = Visibility.Visible;
+                PnlDeepBootNav.Visibility = Visibility.Collapsed;
                 RadDriverRestore.IsChecked = true;
                 NavigateToDriverRestore();
             }
+        }
+
+        public void SetupNavigationGroupDeepBoot()
+        {
+            ColSidebar.Width = new GridLength(230);
+            SidebarGrid.Visibility = Visibility.Visible;
+            SidebarBorder.Visibility = Visibility.Visible;
+
+            PnlBeforeWinNav.Visibility = Visibility.Collapsed;
+            PnlAfterWinNav.Visibility = Visibility.Collapsed;
+            PnlDeepBootNav.Visibility = Visibility.Visible;
+            RadSystemOptimize.IsChecked = true;
+            NavigateToSystemOptimize();
         }
 
         private void Navigation_Checked(object sender, RoutedEventArgs e)
